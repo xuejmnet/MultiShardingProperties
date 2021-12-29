@@ -71,14 +71,16 @@ namespace MultiShardingProperties
             //当前时间的tail
             var currentTail = TimeFormatToTail(orderTime);
             //因为是按月分表所以获取下个月的时间判断id是否是在临界点创建的
-            var nextMonthFirstDay = ShardingCoreHelper.GetNextMonthFirstDay(DateTime.Now);
+            //var nextMonthFirstDay = ShardingCoreHelper.GetNextMonthFirstDay(DateTime.Now);是错误的
+            var nextMonthFirstDay = ShardingCoreHelper.GetNextMonthFirstDay(orderTime);
             if (orderTime.AddSeconds(10) > nextMonthFirstDay)
             {
                 var nextTail = TimeFormatToTail(nextMonthFirstDay);
                 return DoOrderNoFilter(shardingOperator, orderTime, currentTail, nextTail);
             }
             //因为是按月分表所以获取这个月月初的时间判断id是否是在临界点创建的
-            if (orderTime.AddSeconds(-10) < ShardingCoreHelper.GetCurrentMonthFirstDay(DateTime.Now))
+            //if (orderTime.AddSeconds(-10) < ShardingCoreHelper.GetCurrentMonthFirstDay(DateTime.Now))是错误的
+            if (orderTime.AddSeconds(-10) < ShardingCoreHelper.GetCurrentMonthFirstDay(orderTime))
             {
                 //上个月tail
                 var previewTail = TimeFormatToTail(orderTime.AddSeconds(-10));

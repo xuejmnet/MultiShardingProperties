@@ -23,6 +23,7 @@ namespace MultiShardingProperties.Controllers
             Console.WriteLine("--------------Query OrderNo Begin--------------");
             var order2 = await _defaultDbContext.Set<Order>().Where(o=>o.OrderNo== "202110080000000003").FirstOrDefaultAsync();
             Console.WriteLine("--------------Query OrderNo End--------------");
+            var order2xxx = await _defaultDbContext.Set<Order>().FirstOrDefaultAsync(o => o.OrderNo == "202110080000000003");
             Console.WriteLine("--------------Query OrderCreateTime Begin--------------");
             var dateTime = new DateTime(2021,10,08);
             var order4 = await _defaultDbContext.Set<Order>().Where(o=>o.CreateTime== dateTime).FirstOrDefaultAsync();
@@ -39,6 +40,7 @@ namespace MultiShardingProperties.Controllers
             Console.WriteLine("--------------Query OrderNo Not Check Begin--------------");
             var order3 = await _defaultDbContext.Set<Order>().Where(o => o.OrderNo == "a02110080000000003").FirstOrDefaultAsync();
             Console.WriteLine("--------------Query OrderNo Not Check End--------------");
+            var orderxx3 = await _defaultDbContext.Set<Order>().FirstOrDefaultAsync(o => o.OrderNo == "a02110080000000003");
 
             return Ok();
         }
